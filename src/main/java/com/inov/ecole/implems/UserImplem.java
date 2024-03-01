@@ -1,6 +1,11 @@
 package com.inov.ecole.implems;
 
+import com.inov.ecole.models.Address;
+import com.inov.ecole.models.Course;
 import com.inov.ecole.models.User;
+import com.inov.ecole.repositories.AddressRepo;
+import com.inov.ecole.repositories.CourseRepo;
+import com.inov.ecole.repositories.PromoRepo;
 import com.inov.ecole.repositories.UserRepo;
 import com.inov.ecole.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,16 +18,37 @@ import java.util.Optional;
 public class UserImplem implements UserService {
     @Autowired
     UserRepo userRepo;
+    @Autowired
+    AddressRepo addressRepo;
+    @Autowired
+    PromoRepo promoRepo;
+    @Autowired
+    CourseRepo courseRepo;
 
     @Override
     public User createUser(User user) {
-        //crypter le password
-        //regarder si l'email exite
-        //envoyer un email de confirmation
-        //...
-
         return userRepo.save(user);
     }
+
+    @Override
+    public User createUserWithAddress(User user) {
+        addressRepo.save(user.getAddress());
+        return userRepo.save(user);
+    }
+
+    @Override
+    public User createUserWithAddressAndPromo(User user) {
+        addressRepo.save(user.getAddress());
+        return userRepo.save(user);
+    }
+
+    @Override
+    public void addCourseToUser(Long userId, Long courseId) {
+        User user = userRepo.findById(userId).get();
+        Course course = courseRepo.findById(courseId).get();
+        user.getCourses().add(course);
+        userRepo.save(user);
+     }
 
     @Override
     public Optional<User> getUserById(Long id) {

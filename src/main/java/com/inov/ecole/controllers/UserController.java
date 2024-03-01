@@ -25,6 +25,32 @@ public class UserController {
         );
     }
 
+    @PostMapping("with-address")
+    public ResponseEntity<User> createUserWithAddress (@RequestBody User user){
+        return new ResponseEntity<>(
+                userService.createUserWithAddress(user),
+                HttpStatus.CREATED
+        );
+    }
+
+    @PostMapping("with-address-and-promotion")
+    public ResponseEntity<User> createUserWithAddressAndPromotion (@RequestBody User user){
+        return new ResponseEntity<>(
+                userService.createUserWithAddressAndPromo(user),
+                HttpStatus.CREATED
+        );
+    }
+
+    @PostMapping("add-course-to-user/{userId}/{courseId}")
+    public ResponseEntity<?> addCourseToUser
+            (@PathVariable Long userId, @PathVariable Long courseId){
+
+        return new ResponseEntity<>(
+                HttpStatus.OK
+        );
+    }
+
+
     @GetMapping("{id}")
     public ResponseEntity<?> getUserById (@PathVariable Long id){
         Optional<User> user = userService.getUserById(id);

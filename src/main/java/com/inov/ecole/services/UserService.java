@@ -7,6 +7,10 @@ import java.util.Optional;
 
 public interface UserService {
     User createUser(User user);
+    User createUserWithAddress(User user);
+    User createUserWithAddressAndPromo(User user);
+    void addCourseToUser(Long userId, Long courseId);
+
     Optional<User> getUserById (Long id);
     List<User> getUserByEmail (String email);
 
